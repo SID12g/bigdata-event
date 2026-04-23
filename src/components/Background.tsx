@@ -21,6 +21,7 @@ export default function Background() {
           alt="Background Image"
           loading="eager"
           style={{ width: "auto", height: "100vh" }}
+          sizes="fill"
         />
       </div>
     </div>
