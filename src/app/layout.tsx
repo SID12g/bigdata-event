@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={`${DnfBitBitSans.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="flex items-center justify-center">{children}</body>
     </html>
   );
 }
