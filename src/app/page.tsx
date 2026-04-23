@@ -11,8 +11,7 @@ export default function Home() {
 
   return (
     <>
-      <Background />
-      <div className="flex flex-col justify-between items-center w-full h-[100vh] px-[40px]">
+      <div className="flex flex-col justify-between items-center w-full w500:w-[calc(100vh*428/874)] h-[100vh] px-[40px]">
         <Logo />
         <div className="flex justify-between w-full mb-[60px]">
           <LargeButton
@@ -29,6 +28,7 @@ export default function Home() {
         </div>
       </div>
       {showInfo && <InfoPage onClose={() => setShowInfo(false)} />}
+      <Background />
     </>
   );
 }
