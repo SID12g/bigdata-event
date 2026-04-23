@@ -15,7 +15,7 @@ export default function Background() {
       </div>
 
       {/* 500px 이상: 원본 크기로 중앙 정렬 */}
-      <div className="fixed inset-0 z-[-10] hidden w500:flex items-center justify-center overflow-hidden bg-black">
+      <div className="fixed inset-0 z-[-10] hidden w500:flex items-center justify-center overflow-hidden">
         <Image
           src={BackgroundImage}
           alt="Background Image"
