@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import localFont from "next/font/local";
+import Script from "next/script";
 
 const DnfBitBitSans = localFont({
   src: "./fonts/DNFBitBitv2.otf",
@@ -13,7 +14,7 @@ const DnfBitBitSans = localFont({
 export const metadata: Metadata = {
   title: "빅데이터 퀴즈",
   description:
-    "서울시립대학교 빅데이터혁신융합대학사업단에서 운영하는 이벤트입니다.",
+    "서울시립대학교 빅데이터혁신융합대학사업단에서 운영하는 이벤트 페이지입니다.",
 };
 
 export default function RootLayout({
@@ -23,7 +24,24 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={`${DnfBitBitSans.variable} h-full antialiased`}>
-      <body className="flex items-center justify-center">{children}</body>
+      <body className="flex items-center justify-center">
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-P2T82845"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
+        {children}
+      </body>
+      <Script
+        id="gtm-script"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-P2T82845');`,
+        }}
+      />
     </html>
   );
 }
