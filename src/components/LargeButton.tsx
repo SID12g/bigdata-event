@@ -4,17 +4,17 @@ import Box from "./Box";
 
 export default function LargeButton({
   text,
-
   backgroundColor,
   borderColor,
+  onClick,
 }: {
   text: string;
-
   backgroundColor: string;
   borderColor: string;
+  onClick?: () => void;
 }) {
   return (
-    <button className="contents" onClick={() => alert("clicked!")}>
+    <button className="contents" onClick={onClick}>
       <Box
         backgroundColor={backgroundColor}
         borderColor={borderColor}

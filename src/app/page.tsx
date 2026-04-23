@@ -1,8 +1,14 @@
+"use client";
+
+import { useState } from "react";
 import Background from "@/components/Background";
 import Logo from "@/components/Logo";
 import LargeButton from "@/components/LargeButton";
+import InfoPage from "@/components/InfoPage";
 
 export default function Home() {
+  const [showInfo, setShowInfo] = useState(false);
+
   return (
     <>
       <Background />
@@ -18,9 +24,11 @@ export default function Home() {
             text="INFO"
             backgroundColor="var(--color-navy-bg)"
             borderColor="var(--color-navy-border)"
+            onClick={() => setShowInfo(true)}
           />
         </div>
       </div>
+      {showInfo && <InfoPage onClose={() => setShowInfo(false)} />}
     </>
   );
 }

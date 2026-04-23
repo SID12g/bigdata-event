@@ -6,6 +6,7 @@ export default function Box({
   paddingY,
   width,
   height,
+  className = "mt-[80px]",
 }: {
   children: React.ReactNode;
   backgroundColor: string;
@@ -14,10 +15,11 @@ export default function Box({
   paddingY?: number;
   width?: number;
   height?: number;
+  className?: string;
 }) {
   return (
     <div
-      className="flex flex-col items-center justify-center text-center flex mt-[80px] border-[2px] border-[8px]"
+      className={`flex flex-col items-center justify-center text-center border-[8px] ${className}`}
       style={{
         backgroundColor: backgroundColor,
         borderColor: borderColor,
