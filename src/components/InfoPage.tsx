@@ -1,16 +1,19 @@
 "use client";
 
+import Image from "next/image";
 import Box from "./Box";
+import CharacterImage from "@/../public/images/character.png";
+import SmallButton from "./SmallButton";
 
 export default function InfoPage({ onClose }: { onClose: () => void }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 w-full text-white px-[40px]">
       <Box
         backgroundColor="var(--color-brown-bg)"
         borderColor="var(--color-brown-border)"
         paddingX={32}
         paddingY={32}
-        className="relative"
+        className="relative w-full"
       >
         <div className="absolute top-[20px] right-[20px]">
           <button onClick={onClose}>
@@ -21,11 +24,34 @@ export default function InfoPage({ onClose }: { onClose: () => void }) {
               height={48}
               className=""
             >
-              <p className="text-[var(--color-white)] text-[20px] font-bold">X</p>
+              <p className="text-[var(--color-white)] text-[20px] font-bold">
+                X
+              </p>
             </Box>
           </button>
         </div>
-        <p className="text-[var(--color-white)] text-[24px]">INFO</p>
+        <div className="w-full flex flex-col mt-[108px] items-center text-center gap-[20px]">
+          <Image src={CharacterImage} alt="Character Image" />
+          <p className="text-[20px]">빅데이터 퀴즈 v1.0</p>
+          <p className="text-[14px]">
+            서울시립대학교
+            <br />
+            빅데이터혁신융합대학사업단
+          </p>
+          <p className="text-[10px]">© 2026 sid12g All rights reserved.</p>
+        </div>
+        <div className="w-full gap-[6px] flex flex-col mt-[70px]">
+          <SmallButton
+            text="Instagram"
+            href="https://www.instagram.com/uos_bigdata"
+          />
+          <SmallButton
+            text="GitHub"
+            href="https://github.com/SID12g/bigdata-event"
+          />
+          <SmallButton text="개인정보 처리방침" href="#" />
+          <SmallButton text="오픈소스 라이브러리" href="#" />
+        </div>
       </Box>
     </div>
   );

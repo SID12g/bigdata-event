@@ -4,15 +4,17 @@ export default function Box({
   borderColor,
   paddingX,
   paddingY,
+  borderW,
   width,
   height,
-  className = "mt-[80px]",
+  className,
 }: {
   children: React.ReactNode;
   backgroundColor: string;
   borderColor: string;
   paddingX?: number;
   paddingY?: number;
+  borderW?: number;
   width?: number;
   height?: number;
   className?: string;
@@ -25,7 +27,8 @@ export default function Box({
         borderColor: borderColor,
         width: `${width}px`,
         height: `${height}px`,
-        padding: paddingX ? `${paddingX}px ${paddingY}px` : undefined,
+        padding: paddingX ? `${paddingY}px ${paddingX}px` : undefined,
+        borderWidth: borderW ? borderW : "8px",
       }}
     >
       {children}
