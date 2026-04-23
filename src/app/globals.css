@@ -72,11 +72,12 @@ html {
 
   .landscape-lock::before {
     content: "📱";
-    font-size: 48px;
-    transform: rotate(90deg);
+    font-size: 64px;
+    transform: rotate(270deg);
   }
 
   .landscape-lock::after {
-    content: "화면을 세로로 회전해주세요";
+    content: "화면을 세로로 회전하거나 창을 축소해주세요.";
+    font-size: 20px;
   }
 }
