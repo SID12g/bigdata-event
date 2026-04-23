@@ -49,3 +49,34 @@
 
 html {
 }
+
+.landscape-lock {
+  display: none;
+}
+
+@media screen and (orientation: landscape) {
+  .landscape-lock {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background-color: #000;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .landscape-lock::before {
+    content: "📱";
+    font-size: 48px;
+    transform: rotate(90deg);
+  }
+
+  .landscape-lock::after {
+    content: "화면을 세로로 회전해주세요";
+  }
+}

@@ -33,6 +33,7 @@ export default function RootLayout({
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
+        <div className="landscape-lock" />
         {children}
         <Script
           id="gtm-script"
