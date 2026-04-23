@@ -14,12 +14,16 @@ export default function LargeButton({
   onClick?: () => void;
 }) {
   return (
-    <button className="contents" onClick={onClick}>
+    <button
+      onClick={onClick}
+      style={{ touchAction: "manipulation", cursor: "pointer" }}
+    >
       <Box
         backgroundColor={backgroundColor}
         borderColor={borderColor}
         paddingX={12}
         paddingY={14}
+        className="pointer-events-none"
       >
         <p className="text-[32px] text-[var(--color-white)]">{text}</p>
       </Box>

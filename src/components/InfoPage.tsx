@@ -13,16 +13,16 @@ export default function InfoPage({ onClose }: { onClose: () => void }) {
         borderColor="var(--color-brown-border)"
         paddingX={32}
         paddingY={32}
-        className="relative w-full"
+        className="relative"
+        width="100%"
       >
         <div className="absolute top-[20px] right-[20px]">
           <button onClick={onClose}>
             <Box
               backgroundColor="var(--color-red-bg)"
               borderColor="var(--color-red-border)"
-              width={48}
-              height={48}
-              className=""
+              width="48px"
+              height="48px"
             >
               <p className="text-[var(--color-white)] text-[20px] font-bold">
                 X

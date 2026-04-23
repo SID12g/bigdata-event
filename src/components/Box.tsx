@@ -15,8 +15,8 @@ export default function Box({
   paddingX?: number;
   paddingY?: number;
   borderW?: number;
-  width?: number;
-  height?: number;
+  width?: string;
+  height?: string;
   className?: string;
 }) {
   return (
@@ -25,8 +25,8 @@ export default function Box({
       style={{
         backgroundColor: backgroundColor,
         borderColor: borderColor,
-        width: `${width}px`,
-        height: `${height}px`,
+        width: width ? `${width}` : "auto",
+        height: height ? `${height}` : "auto",
         padding: paddingX ? `${paddingY}px ${paddingX}px` : undefined,
         borderWidth: borderW ? borderW : "8px",
       }}
