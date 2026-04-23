@@ -7,7 +7,11 @@ import SmallButton from "./SmallButton";
 
 export default function InfoPage({ onClose }: { onClose: () => void }) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 w-full text-white px-[40px]">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 w-full text-white px-[40px]"
+      onClick={onClose}
+    >
+      <div onClick={(e) => e.stopPropagation()} className="w-full">
       <Box
         backgroundColor="var(--color-brown-bg)"
         borderColor="var(--color-brown-border)"
@@ -53,6 +57,7 @@ export default function InfoPage({ onClose }: { onClose: () => void }) {
           <SmallButton text="오픈소스 라이브러리" href="#" />
         </div>
       </Box>
+      </div>
     </div>
   );
 }
