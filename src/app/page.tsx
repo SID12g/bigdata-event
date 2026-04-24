@@ -11,7 +11,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex flex-col justify-between items-center w-full w500:w-[calc(100vh*428/874)] h-[100vh] px-[40px]">
+      <div className="flex flex-col justify-between items-center w-full w500:w-[calc(100vh*428/874)] h-[100vh] px-[20px]">
         <Logo />
         <div className="flex justify-between w-full mb-[60px]">
           <LargeButton

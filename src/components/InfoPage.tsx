@@ -17,7 +17,7 @@ export default function InfoPage({ onClose }: { onClose: () => void }) {
           borderColor="var(--color-brown-border)"
           paddingX={32}
           paddingY={32}
-          className="relative"
+          className="relative mt-[40px] mb-[40px]"
           width="100%"
         >
           <div className="absolute top-[20px] right-[20px]">
