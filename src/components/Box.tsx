@@ -25,8 +25,8 @@ export default function Box({
       style={{
         backgroundColor: backgroundColor,
         borderColor: borderColor,
-        width: width ? `${width}` : "auto",
-        height: height ? `${height}` : "auto",
+        width: width ? `${width}` : "",
+        height: height ? `${height}` : "",
         padding: paddingX ? `${paddingY}px ${paddingX}px` : undefined,
         borderWidth: borderW ? borderW : "8px",
       }}
