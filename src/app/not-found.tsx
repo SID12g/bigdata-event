@@ -34,7 +34,7 @@ export default function NotFound() {
         >
           <div className="flex flex-col items-start px-[12px] py-[14px] w-full">
             <p className="text-[16px] text-[var(--color-yellow-primary)]">
-              데이티
+              티티
             </p>
             <p className="text-[14px] text-white mt-[8px] text-justify leading-[170%]">
               404! 앗, 길을 잃어버렸네요! 이 페이지는 존재하지 않아요.

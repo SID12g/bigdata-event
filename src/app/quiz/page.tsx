@@ -81,7 +81,7 @@ const QUESTIONS: {
 ];
 
 const INTRO_STEPS = [
-  { daity: "안녕하세요. 저는 데이티에요.", response: "안녕, 반가워!" },
+  { daity: "안녕하세요. 저는 티티에요.", response: "안녕, 반가워!" },
   {
     daity: "지금부터 마이크로디그리에대해 알아볼까요?",
     response: "좋아, 떠나보자!",
@@ -119,7 +119,7 @@ function ChatBox({ text }: { text: string }) {
       className="w-full"
     >
       <div className="flex flex-col items-start px-[12px] py-[14px] w-full">
-        <p className="text-[16px] text-[var(--color-yellow-primary)]">데이티</p>
+        <p className="text-[16px] text-[var(--color-yellow-primary)]">티티</p>
         <p className="text-[14px] text-white mt-[8px] text-justify leading-[170%]">
           {text}
         </p>
@@ -149,8 +149,9 @@ export default function QuizPage() {
         ? "문제를 풀기 전에 용사님의 인스타그램 아이디를 입력해주세요!"
         : INTRO_STEPS[introStep].daity;
 
-    const responseText =
-      isConfirmStep ? "가자!" : INTRO_STEPS[introStep]?.response;
+    const responseText = isConfirmStep
+      ? "가자!"
+      : INTRO_STEPS[introStep]?.response;
 
     const handleNext = () => {
       if (isConfirmStep) {
@@ -212,23 +213,22 @@ export default function QuizPage() {
 
     return (
       <>
-        <div className="absolute bottom-[32px] left-[20px] right-[20px] flex flex-col items-end gap-[8px]">
-          <div className="w-full px-[4px]">
-            <p className="text-[var(--color-yellow-primary)] text-[14px]">
-              Q{currentQ + 1} / 10
-            </p>
-          </div>
+        <div className="absolute top-[80px] left-[20px] right-[20px] h-[calc(100vh-80px)] flex flex-col items-end gap-[8px]">
           <Box
             backgroundColor="var(--color-brown-bg)"
             borderColor="var(--color-brown-border)"
             className="w-full"
           >
             <div className="flex flex-col items-start px-[12px] py-[14px] w-full">
-              <p className="text-[14px] text-white text-justify leading-[170%]">
+              <p className="text-[var(--color-yellow-primary)] text-[16px] text-left mb-[8px]">
+                Q{currentQ + 1} / 10
+              </p>
+              <p className="text-[14px] text-white text-left leading-[170%]">
                 {q.question}
               </p>
             </div>
           </Box>
+          <div className="flex-1" />
           {userAnswer === null ? (
             <div className="flex gap-[8px] w-full">
               <button
@@ -237,28 +237,23 @@ export default function QuizPage() {
                 style={{ touchAction: "manipulation" }}
               >
                 <Box
-                  backgroundColor="var(--color-green-bg)"
-                  borderColor="var(--color-green-border)"
-                  paddingX={12}
-                  paddingY={14}
-                  className="w-full pointer-events-none"
+                  backgroundColor="var(--color-blue-bg)"
+                  borderColor="var(--color-blue-border)"
+                  className="w-[120px] h-[120px] pointer-events-none"
                 >
-                  <p className="text-[32px] text-[var(--color-white)]">O</p>
+                  <p className="text-[64px] text-[var(--color-white)]">O</p>
                 </Box>
               </button>
               <button
-                className="flex-1"
                 onClick={() => handleAnswer("X")}
                 style={{ touchAction: "manipulation" }}
               >
                 <Box
                   backgroundColor="var(--color-red-bg)"
                   borderColor="var(--color-red-border)"
-                  paddingX={12}
-                  paddingY={14}
-                  className="w-full pointer-events-none"
+                  className="w-[120px] h-[120px] pointer-events-none"
                 >
-                  <p className="text-[32px] text-[var(--color-white)]">X</p>
+                  <p className="text-[64px] text-[var(--color-white)]">X</p>
                 </Box>
               </button>
             </div>
@@ -271,10 +266,10 @@ export default function QuizPage() {
               >
                 <div className="flex flex-col items-start px-[12px] py-[14px] w-full">
                   <p className="text-[16px] text-[var(--color-yellow-primary)]">
-                    데이티
+                    티티
                   </p>
                   <p className="text-[14px] text-white mt-[8px] text-justify leading-[170%]">
-                    {q.answer}, {isCorrect ? "정답이에요!" : "오답이에요 ㅠㅠ"}
+                    {q.answer}, {isCorrect ? "정답이에요!" : "오답이에요 😭"}
                     <br />
                     {q.explanation}
                   </p>
@@ -283,6 +278,7 @@ export default function QuizPage() {
               <NextButton text="다음" onClick={handleNextQuestion} />
             </>
           )}
+          <div className="h-[32px]" />
         </div>
         <BackgroundCharacter />
       </>
@@ -295,7 +291,7 @@ export default function QuizPage() {
   const handleOutroNext = () => {
     if (outroStep === 3) {
       router.push(
-        `/result?id=${encodeURIComponent(instagramId)}&score=${correctCount}`
+        `/result?id=${encodeURIComponent(instagramId)}&score=${correctCount}`,
       );
       return;
     }
