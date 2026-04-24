@@ -182,7 +182,12 @@ export default function QuizPage() {
                 placeholder="예시) uos_bigdata"
                 className="flex-1 bg-[var(--color-navy-bg)] border-[4px] border-[var(--color-navy-border)] text-white text-[14px] px-[6px] py-[8px] outline-none placeholder-[var(--color-grey)]"
               />
-              <NextButton text="입력하기" onClick={handleInputSubmit} />
+              <NextButton
+                text="입력하기"
+                onClick={handleInputSubmit}
+                backgroundColor="var(--color-green-bg)"
+                borderColor="var(--color-green-border)"
+              />
             </div>
           ) : (
             <NextButton text={responseText!} onClick={handleNext} />

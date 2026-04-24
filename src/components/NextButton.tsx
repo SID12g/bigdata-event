@@ -5,14 +5,18 @@ import Box from "./Box";
 export default function NextButton({
   text,
   onClick,
+  backgroundColor = "var(--color-navy-bg)",
+  borderColor = "var(--color-navy-border)",
 }: {
   text: string;
   onClick?: () => void;
+  backgroundColor?: string;
+  borderColor?: string;
 }) {
   const box = (
     <Box
-      backgroundColor="var(--color-navy-bg)"
-      borderColor="var(--color-navy-border)"
+      backgroundColor={backgroundColor}
+      borderColor={borderColor}
       paddingX={20}
       paddingY={12}
       borderW={4}
