@@ -179,8 +179,8 @@ export default function QuizPage() {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleInputSubmit()}
-                placeholder="인스타그램 아이디"
-                className="flex-1 bg-[var(--color-brown-bg)] border-[4px] border-[var(--color-brown-border)] text-white text-[14px] px-[12px] py-[10px] outline-none placeholder-[var(--color-grey)]"
+                placeholder="예시) uos_bigdata"
+                className="flex-1 bg-[var(--color-navy-bg)] border-[4px] border-[var(--color-navy-border)] text-white text-[14px] px-[6px] py-[8px] outline-none placeholder-[var(--color-grey)]"
               />
               <NextButton text="입력하기" onClick={handleInputSubmit} />
             </div>
