@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Background from "@/components/Background";
 import Logo from "@/components/Logo";
 import LargeButton from "@/components/LargeButton";
@@ -8,6 +9,7 @@ import InfoPage from "@/components/InfoPage";
 
 export default function Home() {
   const [showInfo, setShowInfo] = useState(false);
+  const router = useRouter();
 
   return (
     <>
@@ -18,6 +20,7 @@ export default function Home() {
             text="START"
             backgroundColor="var(--color-green-bg)"
             borderColor="var(--color-green-border)"
+            onClick={() => router.push("/quiz")}
           />
           <LargeButton
             text="INFO"

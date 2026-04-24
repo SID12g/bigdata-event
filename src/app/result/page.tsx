@@ -1,5 +1,3 @@
-"use client";
-
 import Background from "@/components/Background";
 import Box from "@/components/Box";
 import Logo from "@/components/Logo";
@@ -7,7 +5,14 @@ import CharacterImage from "@/../public/images/character.png";
 import Image from "next/image";
 import SmallButton from "@/components/SmallButton";
 
-export default function ResultPage() {
+export default async function ResultPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ id?: string; score?: string }>;
+}) {
+  const { id = "", score = "0" } = await searchParams;
+  const scoreNum = Math.max(0, Math.min(10, parseInt(score, 10) || 0));
+
   return (
     <>
       <div className="flex flex-col justify-between items-center w-full w500:w-[calc(100vh*428/874)] h-[100vh] px-[20px]">
@@ -18,10 +23,10 @@ export default function ResultPage() {
           className="w-full"
         >
           <p className="text-[36px] text-[var(--color-yellow-primary)] mt-[30px] mb-[4px]">
-            8/10
+            {scoreNum}/10
           </p>
           <p className="mb-[4px] text-[var(--color-white)] text-[12px]">
-            @clwm_222
+            @{id}
           </p>
           <p className="mb-[20px] text-[var(--color-white)] text-[12px] leading-[180%]">
             위 사람을 데이티가 빅데이터
@@ -36,7 +41,7 @@ export default function ResultPage() {
             className="mb-[20px] w-[120px] h-[120px]"
           />
         </Box>
-        <SmallButton text="Instagram 공유" />
+        <SmallButton text="Instagram 공유" href="https://www.instagram.com" />
         <Box
           backgroundColor="var(--color-brown-bg)"
           borderColor="var(--color-brown-border)"
