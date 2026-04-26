@@ -218,7 +218,7 @@ export default function QuizPage() {
 
     return (
       <>
-        <div className="absolute top-[32px] left-[20px] right-[20px] h-[calc(100vh-60px)] flex flex-col items-end gap-[8px]">
+        <div className="absolute top-[40px] left-[20px] right-[20px] h-[calc(100vh-60px)] flex flex-col items-end gap-[8px]">
           <Box
             backgroundColor="var(--color-brown-bg)"
             borderColor="var(--color-brown-border)"
