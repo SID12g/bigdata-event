@@ -11,8 +11,13 @@ export default async function ResultImagePage({
   const { id = "", score = "0" } = await searchParams;
   const scoreNum = Math.max(0, Math.min(10, parseInt(score, 10) || 0));
   return (
-    <>
-      <div className="">
+    <div className="relative inline-block">
+      <Image
+        src={BackgroundResultImage}
+        alt="BackgroundResult Image"
+        loading="eager"
+      />
+      <div className="absolute inset-[30px]">
         <Box
           backgroundColor="var(--color-brown-bg)"
           borderColor="var(--color-brown-border)"
@@ -37,12 +42,7 @@ export default async function ResultImagePage({
             className="mb-[20px] w-[120px] h-[120px]"
           />
         </Box>
-        <Image
-          src={BackgroundResultImage}
-          alt="BackgroundResult Image"
-          loading="eager"
-        />
       </div>
-    </>
+    </div>
   );
 }
