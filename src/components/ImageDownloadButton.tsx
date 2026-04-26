@@ -25,10 +25,25 @@ export default function ImageDownloadButton({
       pixelRatio: 3,
     });
 
+    const filename = `bigdata-uos-@${id}.png`;
+
     const link = document.createElement("a");
-    link.download = `bigdata-uos-@${id}.png`;
+    link.download = filename;
     link.href = dataUrl;
     link.click();
+
+    if (navigator.share && navigator.canShare) {
+      const [, base64] = dataUrl.split(",");
+      const binary = atob(base64);
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+      const blob = new Blob([bytes], { type: "image/png" });
+      const file = new File([blob], filename, { type: "image/png" });
+
+      if (navigator.canShare({ files: [file] })) {
+        navigator.share({ files: [file] }).catch(() => {});
+      }
+    }
   };
 
   return (
