@@ -22,7 +22,7 @@ export default function InstagramShareButton({
     const dataUrl = await toPng(captureRef.current, {
       width: IMAGE_WIDTH,
       height: IMAGE_HEIGHT,
-      pixelRatio: 1,
+      pixelRatio: 3,
     });
 
     const link = document.createElement("a");
