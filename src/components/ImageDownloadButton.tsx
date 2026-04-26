@@ -25,20 +25,10 @@ export default function ImageDownloadButton({
       pixelRatio: 3,
     });
 
-    const res = await fetch(dataUrl);
-    const blob = await res.blob();
-    const file = new File([blob], `bigdata-result-${id}.png`, {
-      type: "image/png",
-    });
-
-    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-      await navigator.share({ files: [file] });
-    } else {
-      const link = document.createElement("a");
-      link.download = `bigdata-result-${id}.png`;
-      link.href = dataUrl;
-      link.click();
-    }
+    const link = document.createElement("a");
+    link.download = `bigdata-uos-@${id}.png`;
+    link.href = dataUrl;
+    link.click();
   };
 
   return (
