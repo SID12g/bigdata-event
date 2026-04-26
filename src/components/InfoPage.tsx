@@ -85,7 +85,11 @@ export default function InfoPage({ onClose }: { onClose: () => void }) {
           ) : (
             <>
               <div className="w-full flex flex-col mt-[108px] items-center text-center gap-[20px]">
-                <Image src={CharacterImage} alt="Character Image" />
+                <Image
+                  src={CharacterImage}
+                  alt="Character Image"
+                  className="w-[120px] h-[120px]"
+                />
                 <p className="text-[20px]">빅데이터 퀴즈 v1.0</p>
                 <p className="text-[14px]">
                   서울시립대학교
