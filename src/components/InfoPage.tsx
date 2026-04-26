@@ -492,7 +492,7 @@ export default function InfoPage({ onClose }: { onClose: () => void }) {
             </div>
           ) : (
             <>
-              <div className="w-full flex flex-col mt-[108px] items-center text-center gap-[20px]">
+              <div className="w-full flex flex-col mt-[60px] items-center text-center gap-[20px]">
                 <Image
                   src={CharacterImage}
                   alt="Character Image"
@@ -508,7 +508,7 @@ export default function InfoPage({ onClose }: { onClose: () => void }) {
                   © 2026 sid12g All rights reserved.
                 </p>
               </div>
-              <div className="w-full gap-[6px] flex flex-col mt-[70px]">
+              <div className="w-full gap-[6px] flex flex-col mt-[40px]">
                 <SmallButton
                   text="Instagram"
                   href="https://www.instagram.com/uos_bigdata"
