@@ -3,7 +3,7 @@ import Box from "@/components/Box";
 import Logo from "@/components/Logo";
 import CharacterImage from "@/../public/images/character.png";
 import Image from "next/image";
-import SmallButton from "@/components/SmallButton";
+import InstagramDownloadButton from "@/components/InstagramShareButton";
 
 export default async function ResultPage({
   searchParams,
@@ -41,7 +41,7 @@ export default async function ResultPage({
             className="mb-[20px] w-[120px] h-[120px]"
           />
         </Box>
-        <SmallButton text="Instagram 공유" href="https://www.instagram.com" />
+        <InstagramDownloadButton id={id} score={scoreNum} />
         <Box
           backgroundColor="var(--color-brown-bg)"
           borderColor="var(--color-brown-border)"
