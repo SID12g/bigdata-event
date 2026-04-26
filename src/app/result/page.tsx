@@ -3,7 +3,7 @@ import Box from "@/components/Box";
 import Logo from "@/components/Logo";
 import CharacterImage from "@/../public/images/character.png";
 import Image from "next/image";
-import InstagramDownloadButton from "@/components/InstagramShareButton";
+import ImageDownloadButton from "@/components/ImageDownloadButton";
 
 export default async function ResultPage({
   searchParams,
@@ -41,7 +41,7 @@ export default async function ResultPage({
             className="mb-[20px] w-[120px] h-[120px]"
           />
         </Box>
-        <InstagramDownloadButton id={id} score={scoreNum} />
+        <ImageDownloadButton id={id} score={scoreNum} />
         <Box
           backgroundColor="var(--color-brown-bg)"
           borderColor="var(--color-brown-border)"

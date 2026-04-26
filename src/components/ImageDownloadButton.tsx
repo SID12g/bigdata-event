@@ -7,7 +7,7 @@ import Box from "./Box";
 const IMAGE_WIDTH = 300;
 const IMAGE_HEIGHT = 375;
 
-export default function InstagramShareButton({
+export default function ImageDownloadButton({
   id,
   score,
 }: {
@@ -16,7 +16,7 @@ export default function InstagramShareButton({
 }) {
   const captureRef = useRef<HTMLDivElement>(null);
 
-  const handleDownload = async () => {
+  const handleSave = async () => {
     if (!captureRef.current) return;
 
     const dataUrl = await toPng(captureRef.current, {
@@ -25,10 +25,20 @@ export default function InstagramShareButton({
       pixelRatio: 3,
     });
 
-    const link = document.createElement("a");
-    link.download = `bigdata-result-${id}.png`;
-    link.href = dataUrl;
-    link.click();
+    const res = await fetch(dataUrl);
+    const blob = await res.blob();
+    const file = new File([blob], `bigdata-result-${id}.png`, {
+      type: "image/png",
+    });
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({ files: [file] });
+    } else {
+      const link = document.createElement("a");
+      link.download = `bigdata-result-${id}.png`;
+      link.href = dataUrl;
+      link.click();
+    }
   };
 
   return (
@@ -126,7 +136,7 @@ export default function InstagramShareButton({
       </div>
 
       {/* Visible button */}
-      <button onClick={handleDownload} className="contents">
+      <button onClick={handleSave} className="contents">
         <Box
           backgroundColor="var(--color-navy-bg)"
           borderColor="var(--color-navy-border)"
@@ -135,9 +145,7 @@ export default function InstagramShareButton({
           borderW={4}
           className="w-full mt-[20px]"
         >
-          <p className="text-[14px] text-[var(--color-white)]">
-            Instagram 공유
-          </p>
+          <p className="text-[14px] text-[var(--color-white)]">이미지 저장</p>
         </Box>
       </button>
     </>
