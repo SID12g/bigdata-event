@@ -380,8 +380,78 @@ function PrivacyPolicyContent() {
   );
 }
 
+const OPEN_SOURCE_LIBS = [
+  {
+    name: "Next.js",
+    version: "16.2.4",
+    license: "MIT",
+    url: "https://nextjs.org",
+  },
+  {
+    name: "React",
+    version: "19.2.4",
+    license: "MIT",
+    url: "https://react.dev",
+  },
+  {
+    name: "react-dom",
+    version: "19.2.4",
+    license: "MIT",
+    url: "https://react.dev",
+  },
+  {
+    name: "html-to-image",
+    version: "1.11.13",
+    license: "MIT",
+    url: "https://github.com/bubkoo/html-to-image",
+  },
+  {
+    name: "Tailwind CSS",
+    version: "4.2.4",
+    license: "MIT",
+    url: "https://tailwindcss.com",
+  },
+  {
+    name: "TypeScript",
+    version: "5.9.3",
+    license: "Apache-2.0",
+    url: "https://www.typescriptlang.org",
+  },
+];
+
+function OpenSourceContent() {
+  return (
+    <div className="w-full text-left text-[12px] leading-relaxed space-y-[14px]">
+      <p className="text-[16px] font-bold text-center">오픈소스 라이브러리</p>
+      <p>이 앱은 다음 오픈소스 라이브러리를 사용합니다.</p>
+      <div className="space-y-[10px]">
+        {OPEN_SOURCE_LIBS.map((lib) => (
+          <div
+            key={lib.name}
+            className="border border-gray-600 rounded px-[12px] py-[10px]"
+          >
+            <p className="font-semibold">{lib.name}</p>
+            <p className="text-gray-300 mt-[2px]">
+              v{lib.version} · {lib.license}
+            </p>
+            <a
+              href={lib.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 underline break-all mt-[2px] inline-block"
+            >
+              {lib.url}
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function InfoPage({ onClose }: { onClose: () => void }) {
   const [showPrivacy, setShowPrivacy] = useState(false);
+  const [showOpenSource, setShowOpenSource] = useState(false);
 
   return (
     <div
@@ -416,6 +486,10 @@ export default function InfoPage({ onClose }: { onClose: () => void }) {
             <div className="w-full mt-[80px] overflow-y-auto max-h-[60vh]">
               <PrivacyPolicyContent />
             </div>
+          ) : showOpenSource ? (
+            <div className="w-full mt-[80px] overflow-y-auto max-h-[60vh]">
+              <OpenSourceContent />
+            </div>
           ) : (
             <>
               <div className="w-full flex flex-col mt-[108px] items-center text-center gap-[20px]">
@@ -447,7 +521,10 @@ export default function InfoPage({ onClose }: { onClose: () => void }) {
                   text="개인정보 처리방침"
                   onClick={() => setShowPrivacy(true)}
                 />
-                <SmallButton text="오픈소스 라이브러리" href="#" />
+                <SmallButton
+                  text="오픈소스 라이브러리"
+                  onClick={() => setShowOpenSource(true)}
+                />
               </div>
             </>
           )}
