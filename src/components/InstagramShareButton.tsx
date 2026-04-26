@@ -133,7 +133,7 @@ export default function InstagramShareButton({
           paddingX={20}
           paddingY={4}
           borderW={4}
-          className="w-full"
+          className="w-full mt-[20px]"
         >
           <p className="text-[14px] text-[var(--color-white)]">
             Instagram 공유

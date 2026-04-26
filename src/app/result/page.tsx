@@ -15,12 +15,12 @@ export default async function ResultPage({
 
   return (
     <>
-      <div className="flex flex-col justify-between items-center w-full w500:w-[calc(100vh*428/874)] h-[100vh] px-[20px]">
+      <div className="flex flex-col items-center w-full w500:w-[calc(100vh*428/874)] h-[100vh] px-[20px]">
         <Logo />
         <Box
           backgroundColor="var(--color-brown-bg)"
           borderColor="var(--color-brown-border)"
-          className="w-full"
+          className="w-full mt-[20px] mb-[24px]"
         >
           <p className="text-[36px] text-[var(--color-yellow-primary)] mt-[30px] mb-[4px]">
             {scoreNum}/10
@@ -47,7 +47,7 @@ export default async function ResultPage({
           borderColor="var(--color-brown-border)"
           paddingX={12}
           paddingY={10}
-          className="mb-[32px]"
+          className="mb-[32px] mt-[20px]"
         >
           <p className="text-[var(--color-white)] text-[12px] text-left leading-[170%]">
             이 화면을 서포터즈에게 보여준 뒤에, 선물을 가져가주세요!
