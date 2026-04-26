@@ -2,7 +2,7 @@ import Box from "./Box";
 
 export default function Logo() {
   return (
-    <div className="mt-[80px]">
+    <div className="mt-[40px]">
       <Box
         backgroundColor="var(--color-brown-bg)"
         borderColor="var(--color-brown-border)"
