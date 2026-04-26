@@ -173,20 +173,20 @@ export default function QuizPage() {
         <div className="absolute bottom-[32px] left-[20px] right-[20px] flex flex-col items-end gap-[8px]">
           <ChatBox text={daityText} />
           {isInputStep ? (
-            <div className="flex gap-[8px] w-full">
+            <div className="flex gap-[8px] w-full items-stretch flex-row-reverse">
+              <NextButton
+                text="입력"
+                onClick={handleInputSubmit}
+                backgroundColor="var(--color-green-bg)"
+                borderColor="var(--color-green-border)"
+              />
               <input
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleInputSubmit()}
                 placeholder="예시) uos_bigdata"
-                className="flex-1 bg-[var(--color-navy-bg)] border-[4px] border-[var(--color-navy-border)] text-white text-[14px] px-[6px] py-[8px] outline-none placeholder-[var(--color-grey)]"
-              />
-              <NextButton
-                text="입력하기"
-                onClick={handleInputSubmit}
-                backgroundColor="var(--color-green-bg)"
-                borderColor="var(--color-green-border)"
+                className="min-w-0 flex-1 bg-[var(--color-navy-bg)] border-[4px] border-[var(--color-navy-border)] text-white text-[14px] px-[6px] py-[8px] outline-none placeholder-[var(--color-grey)]"
               />
             </div>
           ) : (
