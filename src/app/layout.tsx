@@ -28,6 +28,18 @@ export default function RootLayout({
   return (
     <html lang="ko" className={`${DnfBitBitSans.variable} h-full antialiased`}>
       <body className="flex items-center justify-center">
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-J3HJ6ZS8KW"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-J3HJ6ZS8KW');
+          `}
+        </Script>
         <div className="landscape-lock" />
         {children}
       </body>
