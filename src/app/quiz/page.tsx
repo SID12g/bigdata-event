@@ -39,28 +39,77 @@ const QUESTIONS: {
   },
 ];
 
-type Role = "tity" | "iroume";
+type Role = "tity" | "iroume" | "both";
 
-const INTRO_STEPS: { text: string; response: string; role: Role }[] = [
+type IntroStep =
+  | { type: "message"; text: string; response: string; role: Role }
+  | {
+      type: "input";
+      text: string;
+      submitText: string;
+      placeholder: string;
+      field: "studentId" | "instagramId";
+      role: Role;
+    };
+
+const INTRO_STEPS: IntroStep[] = [
   {
+    type: "message",
     text: "안녕하세요. 저는 티티에요.",
     response: "안녕, 반가워!",
     role: "tity",
   },
   {
-    text: "지금부터 마이크로디그리에대해 알아볼까요?",
-    response: "좋아, 떠나보자!",
-    role: "tity",
+    type: "message",
+    text: "안녕하세요. 저는 이루매에요.",
+    response: "안녕!",
+    role: "iroume",
   },
   {
-    text: "그러면 마이크로디그리에 대한 퀴즈를 풀어주세요! 퀴즈는 OX 10문제에요!",
+    type: "message",
+    text: "저희는 0과 1로 이루어진 파도 속에서 빅데이터에 대한 정보를 찾고 있어요.",
+    response: "그렇구나",
+    role: "both",
+  },
+  {
+    type: "message",
+    text: "저희의 탐험에 동참하시겠어요?",
+    response: "물론이지",
+    role: "both",
+  },
+  {
+    type: "message",
+    text: "좋아요! 그러면 함께 떠나보아요!",
     response: "좋아!",
-    role: "tity",
+    role: "both",
   },
   {
-    text: "뒤에 이벤트도 준비되어있으니 기대해주세요!",
-    response: "그래!",
+    type: "input",
+    text: "우선 탐험가님의 학번을 입력해주세요!",
+    submitText: "입력",
+    placeholder: "예시) 2026010001",
     role: "tity",
+    field: "studentId",
+  },
+  {
+    type: "input",
+    text: "그리고 탐험가님의 인스타그램 아이디를 입력해주세요!",
+    submitText: "입력",
+    placeholder: "예시) uos_bigdata (@제외)",
+    role: "iroume",
+    field: "instagramId",
+  },
+  {
+    type: "message",
+    text: "",
+    response: "맞아!",
+    role: "both",
+  },
+  {
+    type: "message",
+    text: "저희의 탐험은 OX 퀴즈 4문제로 이루어져 있어요. 뒤에 선물도 기다리고 있으니, 끝까지 함께해주세요!",
+    response: "물론이지!",
+    role: "both",
   },
 ];
 
@@ -69,30 +118,26 @@ const OUTRO_STEPS = (
   n: number,
 ): { text: string; response: string; role: Role }[] => [
   {
-    text: `${id}님 총 ${n} 문제를 맞추셨네요!`,
+    text: `${id}님 총 ${n}문제를 맞추셨네요!`,
     response: "맞아!",
-    role: "tity",
+    role: "both",
   },
   {
     text: `${id}님을 빅데이터 박사로 인정합니다!`,
     response: "고마워!",
-    role: "tity",
+    role: "both",
   },
   {
-    text: "빅데이터 박사님을 위해 준비한 선물을 받아가주세요!",
-    response: "알겠어!",
-    role: "tity",
-  },
-  {
-    text: "그리고, 결과를 인스타그램 스토리에 공유한 뒤에 @uos_bigdata를 언급후 팔로우 해주시면, 추첨을 통해 치킨을 드립니다!",
-    response: "꼭 참여할게!",
-    role: "tity",
+    text: "결과를 인스타그램 스토리로 공유한 뒤 @uos_bigdata를 언급해주시면, 선물을 드리고 있어요. 꼭 참여해주세요!",
+    response: "꼭 참여할게",
+    role: "both",
   },
 ];
 
 const ROLE_NAMES: Record<Role, string> = {
   tity: "티티",
   iroume: "이루매",
+  both: "티티, 이루매",
 };
 
 function ChatBox({ text, role = "tity" }: { text: string; role?: Role }) {
@@ -106,7 +151,7 @@ function ChatBox({ text, role = "tity" }: { text: string; role?: Role }) {
         <p className="text-[16px] text-[var(--color-yellow-primary)]">
           {ROLE_NAMES[role]}
         </p>
-        <p className="text-[14px] text-white mt-[8px] text-justify leading-[170%]">
+        <p className="text-[14px] text-white mt-[8px] text-left leading-[170%]">
           {text}
         </p>
       </div>
@@ -118,6 +163,7 @@ export default function QuizPage() {
   const router = useRouter();
   const [phase, setPhase] = useState<"intro" | "quiz" | "outro">("intro");
   const [introStep, setIntroStep] = useState(0);
+  const [, setStudentId] = useState("");
   const [instagramId, setInstagramId] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [currentQ, setCurrentQ] = useState(0);
@@ -126,24 +172,12 @@ export default function QuizPage() {
   const [outroStep, setOutroStep] = useState(0);
 
   if (phase === "intro") {
-    const isInputStep = introStep === 4;
-    const isConfirmStep = introStep === 5;
-
-    const tityText = isConfirmStep
-      ? `${instagramId}님이시군요! 그럼 문제를 풀어보러 떠나요!`
-      : isInputStep
-        ? "문제를 풀기 전에 용사님의 인스타그램 아이디를 입력해주세요!"
-        : INTRO_STEPS[introStep].text;
-
-    const introRole =
-      !isConfirmStep && !isInputStep ? INTRO_STEPS[introStep].role : "tity";
-
-    const responseText = isConfirmStep
-      ? "가자!"
-      : INTRO_STEPS[introStep]?.response;
+    const step = INTRO_STEPS[introStep];
+    const isInputStep = step.type === "input";
+    const introText = introStep === 7 ? `${instagramId}님이시군요!` : step.text;
 
     const handleNext = () => {
-      if (isConfirmStep) {
+      if (introStep === INTRO_STEPS.length - 1) {
         setPhase("quiz");
       } else {
         setIntroStep((s) => s + 1);
@@ -153,18 +187,24 @@ export default function QuizPage() {
     const handleInputSubmit = () => {
       const trimmed = inputValue.trim();
       if (!trimmed) return;
-      setInstagramId(trimmed);
-      setIntroStep(5);
+      if (step.type !== "input") return;
+      if (step.field === "studentId") {
+        setStudentId(trimmed);
+      } else {
+        setInstagramId(trimmed);
+      }
+      setInputValue("");
+      setIntroStep((s) => s + 1);
     };
 
     return (
       <>
         <div className="absolute bottom-[32px] left-[20px] right-[20px] flex flex-col items-end gap-[8px]">
-          <ChatBox text={tityText} role={introRole} />
+          <ChatBox text={introText} role={step.role} />
           {isInputStep ? (
             <div className="flex gap-[8px] w-full items-stretch flex-row-reverse">
               <NextButton
-                text="입력"
+                text={step.submitText}
                 onClick={handleInputSubmit}
                 backgroundColor="var(--color-green-bg)"
                 borderColor="var(--color-green-border)"
@@ -174,12 +214,12 @@ export default function QuizPage() {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleInputSubmit()}
-                placeholder="예시) uos_bigdata"
+                placeholder={step.placeholder}
                 className="min-w-0 flex-1 bg-[var(--color-navy-bg)] border-[4px] border-[var(--color-navy-border)] text-white text-[14px] px-[6px] py-[8px] outline-none placeholder-[var(--color-grey)]"
               />
             </div>
           ) : (
-            <NextButton text={responseText!} onClick={handleNext} />
+            <NextButton text={step.response} onClick={handleNext} />
           )}
         </div>
         <BackgroundCharacter />
@@ -262,7 +302,7 @@ export default function QuizPage() {
                   <p className="text-[16px] text-[var(--color-yellow-primary)]">
                     티티
                   </p>
-                  <p className="text-[14px] text-white mt-[8px] text-justify leading-[170%]">
+                  <p className="text-[14px] text-white mt-[8px] text-left leading-[170%]">
                     {q.answer}, {isCorrect ? "정답이에요!" : "오답이에요 😭"}
                     <br />
                     {q.explanation}
@@ -283,7 +323,7 @@ export default function QuizPage() {
   const step = outroSteps[outroStep];
 
   const handleOutroNext = () => {
-    if (outroStep === 3) {
+    if (outroStep === outroSteps.length - 1) {
       router.push(
         `/result?id=${encodeURIComponent(instagramId)}&score=${correctCount}`,
       );
