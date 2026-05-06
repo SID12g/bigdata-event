@@ -39,38 +39,63 @@ const QUESTIONS: {
   },
 ];
 
-const INTRO_STEPS = [
-  { daity: "안녕하세요. 저는 티티에요.", response: "안녕, 반가워!" },
+type Role = "tity" | "iroume";
+
+const INTRO_STEPS: { text: string; response: string; role: Role }[] = [
   {
-    daity: "지금부터 마이크로디그리에대해 알아볼까요?",
+    text: "안녕하세요. 저는 티티에요.",
+    response: "안녕, 반가워!",
+    role: "tity",
+  },
+  {
+    text: "지금부터 마이크로디그리에대해 알아볼까요?",
     response: "좋아, 떠나보자!",
+    role: "tity",
   },
   {
-    daity:
-      "그러면 마이크로디그리에 대한 퀴즈를 풀어주세요! 퀴즈는 OX 10문제에요!",
+    text: "그러면 마이크로디그리에 대한 퀴즈를 풀어주세요! 퀴즈는 OX 10문제에요!",
     response: "좋아!",
+    role: "tity",
   },
   {
-    daity: "뒤에 이벤트도 준비되어있으니 기대해주세요!",
+    text: "뒤에 이벤트도 준비되어있으니 기대해주세요!",
     response: "그래!",
+    role: "tity",
   },
 ];
 
-const OUTRO_STEPS = (id: string, n: number) => [
-  { daity: `${id}님 총 ${n} 문제를 맞추셨네요!`, response: "맞아!" },
-  { daity: `${id}님을 빅데이터 박사로 인정합니다!`, response: "고마워!" },
+const OUTRO_STEPS = (
+  id: string,
+  n: number,
+): { text: string; response: string; role: Role }[] => [
   {
-    daity: "빅데이터 박사님을 위해 준비한 선물을 받아가주세요!",
+    text: `${id}님 총 ${n} 문제를 맞추셨네요!`,
+    response: "맞아!",
+    role: "tity",
+  },
+  {
+    text: `${id}님을 빅데이터 박사로 인정합니다!`,
+    response: "고마워!",
+    role: "tity",
+  },
+  {
+    text: "빅데이터 박사님을 위해 준비한 선물을 받아가주세요!",
     response: "알겠어!",
+    role: "tity",
   },
   {
-    daity:
-      "그리고, 결과를 인스타그램 스토리에 공유한 뒤에 @uos_bigdata를 언급후 팔로우 해주시면, 추첨을 통해 치킨을 드립니다!",
+    text: "그리고, 결과를 인스타그램 스토리에 공유한 뒤에 @uos_bigdata를 언급후 팔로우 해주시면, 추첨을 통해 치킨을 드립니다!",
     response: "꼭 참여할게!",
+    role: "tity",
   },
 ];
 
-function ChatBox({ text }: { text: string }) {
+const ROLE_NAMES: Record<Role, string> = {
+  tity: "티티",
+  iroume: "이루매",
+};
+
+function ChatBox({ text, role = "tity" }: { text: string; role?: Role }) {
   return (
     <Box
       backgroundColor="var(--color-brown-bg)"
@@ -78,7 +103,9 @@ function ChatBox({ text }: { text: string }) {
       className="w-full"
     >
       <div className="flex flex-col items-start px-[12px] py-[14px] w-full">
-        <p className="text-[16px] text-[var(--color-yellow-primary)]">티티</p>
+        <p className="text-[16px] text-[var(--color-yellow-primary)]">
+          {ROLE_NAMES[role]}
+        </p>
         <p className="text-[14px] text-white mt-[8px] text-justify leading-[170%]">
           {text}
         </p>
@@ -102,11 +129,14 @@ export default function QuizPage() {
     const isInputStep = introStep === 4;
     const isConfirmStep = introStep === 5;
 
-    const daityText = isConfirmStep
+    const tityText = isConfirmStep
       ? `${instagramId}님이시군요! 그럼 문제를 풀어보러 떠나요!`
       : isInputStep
         ? "문제를 풀기 전에 용사님의 인스타그램 아이디를 입력해주세요!"
-        : INTRO_STEPS[introStep].daity;
+        : INTRO_STEPS[introStep].text;
+
+    const introRole =
+      !isConfirmStep && !isInputStep ? INTRO_STEPS[introStep].role : "tity";
 
     const responseText = isConfirmStep
       ? "가자!"
@@ -130,7 +160,7 @@ export default function QuizPage() {
     return (
       <>
         <div className="absolute bottom-[32px] left-[20px] right-[20px] flex flex-col items-end gap-[8px]">
-          <ChatBox text={daityText} />
+          <ChatBox text={tityText} role={introRole} />
           {isInputStep ? (
             <div className="flex gap-[8px] w-full items-stretch flex-row-reverse">
               <NextButton
@@ -185,7 +215,7 @@ export default function QuizPage() {
           >
             <div className="flex flex-col items-start px-[12px] py-[14px] w-full">
               <p className="text-[var(--color-yellow-primary)] text-[16px] text-left mb-[8px]">
-                Q{currentQ + 1} / 10
+                Q{currentQ + 1} / 4
               </p>
               <p className="text-[14px] text-white text-left leading-[170%]">
                 {q.question}
@@ -265,7 +295,7 @@ export default function QuizPage() {
   return (
     <>
       <div className="absolute bottom-[32px] left-[20px] right-[20px] flex flex-col items-end gap-[8px]">
-        <ChatBox text={step.daity} />
+        <ChatBox text={step.text} role={step.role} />
         <NextButton text={step.response} onClick={handleOutroNext} />
       </div>
       <BackgroundCharacter />
