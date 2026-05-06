@@ -1,9 +1,10 @@
+import Image from "next/image";
 import Box from "./Box";
-
+import TitleImage from "@/../public/images/title.svg";
 export default function Logo() {
   return (
     <div className="mt-[40px]">
-      <Box
+      {/* <Box
         backgroundColor="var(--color-brown-bg)"
         borderColor="var(--color-brown-border)"
         paddingX={16}
@@ -15,7 +16,8 @@ export default function Logo() {
         <p className="text-[40px] text-[var(--color-yellow-primary)]">
           빅데이터 퀴즈
         </p>
-      </Box>
+      </Box> */}
+      <Image width={280} src={TitleImage} alt="Title" />
     </div>
   );
 }
