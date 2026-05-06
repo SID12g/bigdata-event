@@ -11,7 +11,7 @@ export default async function ResultPage({
   searchParams: Promise<{ id?: string; score?: string }>;
 }) {
   const { id = "", score = "0" } = await searchParams;
-  const scoreNum = Math.max(0, Math.min(10, parseInt(score, 10) || 0));
+  const scoreNum = Math.max(0, Math.min(4, parseInt(score, 4) || 0));
 
   return (
     <>
@@ -23,7 +23,7 @@ export default async function ResultPage({
           className="w-full mt-[20px] mb-[24px]"
         >
           <p className="text-[36px] text-[var(--color-yellow-primary)] mt-[30px] mb-[4px]">
-            {scoreNum}/10
+            {scoreNum}/4
           </p>
           <p className="mb-[4px] text-[var(--color-white)] text-[12px]">
             @{id}
