@@ -125,7 +125,7 @@ export default function ImageDownloadButton({
               </p>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/images/character.png"
+                src="/images/character.svg"
                 alt="character"
                 style={{
                   width: 120,

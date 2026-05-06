@@ -1,7 +1,7 @@
 import Image from "next/image";
 import BackgroundResultImage from "@/../public/images/background_result.png";
 import Box from "@/components/Box";
-import CharacterImage from "@/../public/images/character.png";
+import CharacterImage from "@/../public/images/character.svg";
 
 export default async function ResultImagePage({
   searchParams,

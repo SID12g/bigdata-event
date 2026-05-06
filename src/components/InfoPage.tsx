@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import Box from "./Box";
-import CharacterImage from "@/../public/images/character.png";
+import CharacterImage from "@/../public/images/character.svg";
 import SmallButton from "./SmallButton";
 
 function PrivacyPolicyContent() {
@@ -366,7 +366,7 @@ function PrivacyPolicyContent() {
         <p className="font-semibold mb-[4px]">개인정보 보호책임자</p>
         <ul className="list-disc list-outside pl-[16px] space-y-[4px]">
           <li>성명: 조성민</li>
-          <li>연락처: sid12g@uos.ac.kr</li>
+          <li>연락처: sid12g@bigdata.uos.ac.kr</li>
         </ul>
       </div>
 

@@ -1,7 +1,7 @@
 import Background from "@/components/Background";
 import Box from "@/components/Box";
 import Logo from "@/components/Logo";
-import CharacterImage from "@/../public/images/character.png";
+import CharacterImage from "@/../public/images/character.svg";
 import Image from "next/image";
 import ImageDownloadButton from "@/components/ImageDownloadButton";
 
