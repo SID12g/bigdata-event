@@ -95,7 +95,7 @@ const INTRO_STEPS: IntroStep[] = [
     type: "input",
     text: "그리고 탐험가님의 인스타그램 아이디를 입력해주세요!",
     submitText: "입력",
-    placeholder: "예시) uos_bigdata (@제외)",
+    placeholder: "예시) uos_bigdata (@ 제외)",
     role: "iroume",
     field: "instagramId",
   },
