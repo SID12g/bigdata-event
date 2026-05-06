@@ -455,7 +455,7 @@ export default function InfoPage({ onClose }: { onClose: () => void }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 w-full w500:w-[calc(100vh*428/874)] justify-self-center text-white px-[40px]"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 w-full justify-self-center text-white px-[40px]"
       onClick={onClose}
     >
       <div onClick={(e) => e.stopPropagation()} className="w-full">
