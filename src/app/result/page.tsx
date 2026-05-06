@@ -50,10 +50,9 @@ export default async function ResultPage({
           className="mb-[32px] mt-[20px]"
         >
           <p className="text-[var(--color-white)] text-[12px] text-left leading-[170%]">
-            이 화면을 서포터즈에게 보여준 뒤에, 선물을 가져가주세요!
-            <br />
-            그리고, 결과를 인스타그램 스토리에 공유한 뒤에 @uos_bigdata를 언급후
-            팔로우 해주시면, 추첨을 통해 치킨을 드립니다!
+            결과를 인스타그램 스토리에 공유한 뒤에 @uos_bigdata를 언급해주시면,
+            선물을 드립니다! <br />
+            공유 후 서포터즈에게 인증해주세요!
           </p>
         </Box>
       </div>
