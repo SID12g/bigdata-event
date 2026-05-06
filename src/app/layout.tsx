@@ -12,9 +12,12 @@ const DnfBitBitSans = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "빅데이터 퀴즈",
+  title: "캐치! 캐치! 빅데이터 퀴즈",
   description:
     "서울시립대학교 빅데이터혁신융합대학사업단에서 운영하는 이벤트 페이지입니다.",
+  openGraph: {
+    images: "/images/og.png",
+  },
 };
 
 export default function RootLayout({
