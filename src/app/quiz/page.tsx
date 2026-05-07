@@ -265,9 +265,19 @@ export default function QuizPage() {
         return;
       }
 
-      if (step.field === "instagramId" && !/^[A-Za-z0-9._]+$/.test(trimmed)) {
-        alert("인스타그램 아이디는 공백 없는 영어로 입력해주세요.");
-        return;
+      if (step.field === "instagramId") {
+        const isInvalidLength = trimmed.length < 1 || trimmed.length > 30;
+        const isInvalidFormat =
+          !/^[A-Za-z0-9_](?!.*\.\.)[A-Za-z0-9._]*[A-Za-z0-9_]$|^[A-Za-z0-9_]$/.test(
+            trimmed,
+          );
+
+        if (isInvalidLength || isInvalidFormat) {
+          alert(
+            "인스타그램 아이디는 30자 이내의 영문, 숫자, 밑줄, 마침표만 가능하며, 마침표로 시작/끝나거나 연속될 수 없습니다.",
+          );
+          return;
+        }
       }
 
       setIsCheckingUser(true);
@@ -291,7 +301,9 @@ export default function QuizPage() {
         setInputValue("");
         setIntroStep((s) => s + 1);
       } catch (error) {
-        alert(error instanceof Error ? error.message : "DB 오류가 발생하였습니다.");
+        alert(
+          error instanceof Error ? error.message : "DB 오류가 발생하였습니다.",
+        );
       } finally {
         setIsCheckingUser(false);
       }
@@ -382,7 +394,7 @@ export default function QuizPage() {
                 <Box
                   backgroundColor="var(--color-blue-bg)"
                   borderColor="var(--color-blue-border)"
-                  className="w-[120px] h-[120px] pointer-events-none"
+                  className="w-[120px] h-[120px] pointer-events-none cursor-pointer"
                 >
                   <p className="text-[64px] text-[var(--color-white)]">O</p>
                 </Box>
@@ -394,7 +406,7 @@ export default function QuizPage() {
                 <Box
                   backgroundColor="var(--color-red-bg)"
                   borderColor="var(--color-red-border)"
-                  className="w-[120px] h-[120px] pointer-events-none"
+                  className="w-[120px] h-[120px] pointer-events-none cursor-pointer"
                 >
                   <p className="text-[64px] text-[var(--color-white)]">X</p>
                 </Box>
