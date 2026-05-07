@@ -303,7 +303,8 @@ export default function QuizPage() {
                     티티
                   </p>
                   <p className="text-[14px] text-white mt-[8px] text-left leading-[170%]">
-                    {q.answer}, {isCorrect ? "정답이에요!" : "오답이에요 😭"}
+                    정답은 {q.answer},{" "}
+                    {isCorrect ? "정답이에요!" : "오답이에요 😭"}
                     <br />
                     {q.explanation}
                   </p>

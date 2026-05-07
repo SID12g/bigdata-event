@@ -30,7 +30,12 @@ export default function Logo() {
           빅데이터 퀴즈
         </p>
       </Box> */}
-      <button type="button" onClick={handleClick} aria-label="홈으로 이동">
+      <button
+        type="button"
+        onClick={handleClick}
+        aria-label="홈으로 이동"
+        className="cursor-pointer"
+      >
         <Image width={280} src={TitleImage} alt="Title" />
       </button>
     </div>

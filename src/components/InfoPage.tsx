@@ -88,7 +88,7 @@ function PrivacyPolicyContent() {
                   필수 항목
                 </td>
                 <td className="border border-gray-500 px-[6px] py-[4px]">
-                  인스타그램 아이디 등
+                  학번, 인스타그램 아이디 등
                 </td>
                 <td className="border border-gray-500 px-[6px] py-[4px]">
                   서비스 이용 과정 중, 오프라인
@@ -247,8 +247,8 @@ function PrivacyPolicyContent() {
                   미국
                 </td>
                 <td className="border border-gray-500 px-[6px] py-[4px]">
-                  인스타그램 아이디, 서비스 관련 상세 내용, 이벤트 참여 여부, IP
-                  주소, 쿠키, 캐시 등
+                  학번, 인스타그램 아이디, 서비스 관련 상세 내용, 이벤트 참여
+                  여부, IP 주소, 쿠키, 캐시 등
                 </td>
                 <td className="border border-gray-500 px-[6px] py-[4px]">
                   3개월
