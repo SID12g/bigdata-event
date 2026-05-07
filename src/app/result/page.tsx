@@ -11,7 +11,7 @@ export default async function ResultPage({
   searchParams: Promise<{ id?: string; score?: string }>;
 }) {
   const { id = "", score = "0" } = await searchParams;
-  const scoreNum = Math.max(0, Math.min(4, parseInt(score, 4) || 0));
+  const scoreNum = Math.max(0, Math.min(4, parseInt(score, 10) || 0));
 
   return (
     <>

@@ -163,13 +163,83 @@ export default function QuizPage() {
   const router = useRouter();
   const [phase, setPhase] = useState<"intro" | "quiz" | "outro">("intro");
   const [introStep, setIntroStep] = useState(0);
-  const [, setStudentId] = useState("");
+  const [studentId, setStudentId] = useState("");
   const [instagramId, setInstagramId] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [currentQ, setCurrentQ] = useState(0);
   const [userAnswer, setUserAnswer] = useState<"O" | "X" | null>(null);
+  const [answers, setAnswers] = useState<("O" | "X")[]>([]);
   const [correctCount, setCorrectCount] = useState(0);
   const [outroStep, setOutroStep] = useState(0);
+  const [isCheckingUser, setIsCheckingUser] = useState(false);
+  const [isPostingResult, setIsPostingResult] = useState(false);
+  const [postError, setPostError] = useState("");
+
+  const goToResult = (id: string, score: number) => {
+    router.push(`/result?id=${encodeURIComponent(id)}&score=${score}`);
+  };
+
+  const checkExistingUser = async (
+    field: "studentId" | "instagramId",
+    value: string,
+  ) => {
+    const paramName = field === "studentId" ? "studentId" : "instagramId";
+    const response = await fetch(
+      `/api/users?${paramName}=${encodeURIComponent(value)}`,
+      { cache: "no-store" },
+    );
+    const data = (await response.json()) as {
+      exists?: boolean;
+      user?: { instagramId: string; score: number } | null;
+      error?: string;
+    };
+
+    if (!response.ok) {
+      throw new Error(data.error ?? "참여 여부 확인에 실패했습니다.");
+    }
+
+    return data;
+  };
+
+  const submitResult = async (nextAnswers: ("O" | "X")[]) => {
+    if (isPostingResult) return;
+
+    setIsPostingResult(true);
+    setPostError("");
+
+    try {
+      const response = await fetch("/api/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          studentId,
+          instagramId,
+          answers: nextAnswers,
+        }),
+      });
+      const data = (await response.json()) as {
+        score?: number;
+        error?: string;
+      };
+
+      if (!response.ok) {
+        throw new Error(data.error ?? "저장 요청에 실패했습니다.");
+      }
+
+      setCorrectCount(data.score ?? correctCount);
+      setPhase("outro");
+    } catch (error) {
+      setPostError(
+        `DB 오류가 발생하였습니다. ${
+          error instanceof Error ? error.message : "알 수 없는 오류입니다."
+        }`,
+      );
+    } finally {
+      setIsPostingResult(false);
+    }
+  };
 
   if (phase === "intro") {
     const step = INTRO_STEPS[introStep];
@@ -184,17 +254,47 @@ export default function QuizPage() {
       }
     };
 
-    const handleInputSubmit = () => {
+    const handleInputSubmit = async () => {
+      if (isCheckingUser) return;
+
       const trimmed = inputValue.trim();
-      if (!trimmed) return;
       if (step.type !== "input") return;
-      if (step.field === "studentId") {
-        setStudentId(trimmed);
-      } else {
-        setInstagramId(trimmed);
+
+      if (step.field === "studentId" && !/^\d{10}$/.test(trimmed)) {
+        alert("학번은 숫자 10자리로 입력해주세요.");
+        return;
       }
-      setInputValue("");
-      setIntroStep((s) => s + 1);
+
+      if (step.field === "instagramId" && !/^[A-Za-z0-9._]+$/.test(trimmed)) {
+        alert("인스타그램 아이디는 공백 없는 영어로 입력해주세요.");
+        return;
+      }
+
+      setIsCheckingUser(true);
+      try {
+        const existingUser = await checkExistingUser(step.field, trimmed);
+
+        if (existingUser.exists) {
+          alert("이미 참여한 사용자 입니다.");
+          goToResult(
+            existingUser.user?.instagramId ?? instagramId,
+            existingUser.user?.score ?? 0,
+          );
+          return;
+        }
+
+        if (step.field === "studentId") {
+          setStudentId(trimmed);
+        } else {
+          setInstagramId(trimmed);
+        }
+        setInputValue("");
+        setIntroStep((s) => s + 1);
+      } catch (error) {
+        alert(error instanceof Error ? error.message : "DB 오류가 발생하였습니다.");
+      } finally {
+        setIsCheckingUser(false);
+      }
     };
 
     return (
@@ -204,7 +304,7 @@ export default function QuizPage() {
           {isInputStep ? (
             <div className="flex gap-[8px] w-full items-stretch flex-row-reverse">
               <NextButton
-                text={step.submitText}
+                text={isCheckingUser ? "확인 중" : step.submitText}
                 onClick={handleInputSubmit}
                 backgroundColor="var(--color-green-bg)"
                 borderColor="var(--color-green-border)"
@@ -214,6 +314,7 @@ export default function QuizPage() {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleInputSubmit()}
+                disabled={isCheckingUser}
                 placeholder={step.placeholder}
                 className="min-w-0 flex-1 bg-[var(--color-navy-bg)] border-[4px] border-[var(--color-navy-border)] text-white text-[14px] px-[6px] py-[8px] outline-none placeholder-[var(--color-grey)]"
               />
@@ -233,13 +334,21 @@ export default function QuizPage() {
 
     const handleAnswer = (answer: "O" | "X") => {
       setUserAnswer(answer);
+      setAnswers((prev) => {
+        const next = [...prev];
+        next[currentQ] = answer;
+        return next;
+      });
       if (answer === q.answer) setCorrectCount((n) => n + 1);
     };
 
     const handleNextQuestion = () => {
+      if (isPostingResult) return;
+
+      const nextAnswers = [...answers];
       setUserAnswer(null);
       if (currentQ === 3) {
-        setPhase("outro");
+        submitResult(nextAnswers);
       } else {
         setCurrentQ((n) => n + 1);
       }
@@ -310,11 +419,43 @@ export default function QuizPage() {
                   </p>
                 </div>
               </Box>
-              <NextButton text="다음" onClick={handleNextQuestion} />
+              <NextButton
+                text={isPostingResult ? "저장 중" : "다음"}
+                onClick={handleNextQuestion}
+              />
             </>
           )}
           <div className="h-[32px]" />
         </div>
+        {postError && (
+          <div className="fixed inset-0 z-10 flex items-center justify-center bg-black/60 px-[20px]">
+            <Box
+              backgroundColor="var(--color-brown-bg)"
+              borderColor="var(--color-brown-border)"
+              className="w-full max-w-[360px]"
+            >
+              <div className="flex flex-col gap-[16px] px-[16px] py-[18px]">
+                <p className="text-[14px] text-white text-left leading-[170%]">
+                  {postError}
+                </p>
+                <div className="flex gap-[8px] justify-end">
+                  <NextButton
+                    text="닫기"
+                    onClick={() => router.push("/")}
+                    backgroundColor="var(--color-red-bg)"
+                    borderColor="var(--color-red-border)"
+                  />
+                  <NextButton
+                    text={isPostingResult ? "재시도 중" : "재시도"}
+                    onClick={() => submitResult(answers)}
+                    backgroundColor="var(--color-green-bg)"
+                    borderColor="var(--color-green-border)"
+                  />
+                </div>
+              </div>
+            </Box>
+          </div>
+        )}
         <BackgroundCharacter />
       </>
     );
