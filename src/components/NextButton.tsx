@@ -20,7 +20,7 @@ export default function NextButton({
       paddingX={20}
       paddingY={12}
       borderW={4}
-      className="w-fit"
+      className="w-fit cursor-pointer"
     >
       <p className="text-[16px] text-[var(--color-white)]">{text}</p>
     </Box>

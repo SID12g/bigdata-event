@@ -1,7 +1,20 @@
+"use client";
+
 import Image from "next/image";
-import Box from "./Box";
+import { useRouter } from "next/navigation";
 import TitleImage from "@/../public/images/title.svg";
+
 export default function Logo() {
+  const router = useRouter();
+
+  const handleClick = () => {
+    const shouldMoveHome = window.confirm("홈으로 이동하시겠습니까?");
+
+    if (shouldMoveHome) {
+      router.push("/");
+    }
+  };
+
   return (
     <div className="mt-[40px]">
       {/* <Box
@@ -17,7 +30,9 @@ export default function Logo() {
           빅데이터 퀴즈
         </p>
       </Box> */}
-      <Image width={280} src={TitleImage} alt="Title" />
+      <button type="button" onClick={handleClick} aria-label="홈으로 이동">
+        <Image width={280} src={TitleImage} alt="Title" />
+      </button>
     </div>
   );
 }

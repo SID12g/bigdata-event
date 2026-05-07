@@ -19,7 +19,7 @@ export default function SmallButton({
       paddingX={20}
       paddingY={4}
       borderW={4}
-      className="w-full"
+      className="w-full cursor-pointer"
     >
       <p className="text-[14px] text-[var(--color-white)]">{text}</p>
     </Box>
