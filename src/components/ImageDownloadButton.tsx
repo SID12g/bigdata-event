@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { toPng } from "html-to-image";
 import Box from "./Box";
-import { getExplorerRank } from "@/lib/explorerRank";
+import { getExplorerRank, getExplorerRankImagePath } from "@/lib/explorerRank";
 
 const IMAGE_WIDTH = 300;
 const IMAGE_HEIGHT = 375;
@@ -17,6 +17,7 @@ export default function ImageDownloadButton({
 }) {
   const captureRef = useRef<HTMLDivElement>(null);
   const explorerRank = getExplorerRank(score);
+  const explorerRankImagePath = getExplorerRankImagePath(score);
 
   const handleSave = async () => {
     if (!captureRef.current) return;
@@ -127,7 +128,7 @@ export default function ImageDownloadButton({
               </p>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/images/character.svg"
+                src={explorerRankImagePath}
                 alt="character"
                 style={{
                   width: 120,

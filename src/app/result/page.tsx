@@ -1,10 +1,9 @@
 import Background from "@/components/Background";
 import Box from "@/components/Box";
 import Logo from "@/components/Logo";
-import CharacterImage from "@/../public/images/character.svg";
 import Image from "next/image";
 import ImageDownloadButton from "@/components/ImageDownloadButton";
-import { getExplorerRank } from "@/lib/explorerRank";
+import { getExplorerRank, getExplorerRankImagePath } from "@/lib/explorerRank";
 
 export default async function ResultPage({
   searchParams,
@@ -14,6 +13,7 @@ export default async function ResultPage({
   const { id = "", score = "0" } = await searchParams;
   const scoreNum = Math.max(0, Math.min(4, parseInt(score, 10) || 0));
   const explorerRank = getExplorerRank(scoreNum);
+  const explorerRankImagePath = getExplorerRankImagePath(scoreNum);
 
   return (
     <>
@@ -36,7 +36,7 @@ export default async function ResultPage({
             임명합니다.
           </p>
           <Image
-            src={CharacterImage}
+            src={explorerRankImagePath}
             alt="character"
             width={240}
             height={240}

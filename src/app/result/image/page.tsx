@@ -1,8 +1,7 @@
 import Image from "next/image";
 import BackgroundResultImage from "@/../public/images/background_result.png";
 import Box from "@/components/Box";
-import CharacterImage from "@/../public/images/character.svg";
-import { getExplorerRank } from "@/lib/explorerRank";
+import { getExplorerRank, getExplorerRankImagePath } from "@/lib/explorerRank";
 
 export default async function ResultImagePage({
   searchParams,
@@ -12,6 +11,7 @@ export default async function ResultImagePage({
   const { id = "", score = "0" } = await searchParams;
   const scoreNum = Math.max(0, Math.min(4, parseInt(score, 10) || 0));
   const explorerRank = getExplorerRank(scoreNum);
+  const explorerRankImagePath = getExplorerRankImagePath(scoreNum);
   return (
     <div className="relative inline-block">
       <Image
@@ -37,7 +37,7 @@ export default async function ResultImagePage({
             임명합니다.
           </p>
           <Image
-            src={CharacterImage}
+            src={explorerRankImagePath}
             alt="character"
             width={240}
             height={240}
