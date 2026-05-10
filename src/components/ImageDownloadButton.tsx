@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { toPng } from "html-to-image";
 import Box from "./Box";
+import { getExplorerRank } from "@/lib/explorerRank";
 
 const IMAGE_WIDTH = 300;
 const IMAGE_HEIGHT = 375;
@@ -15,6 +16,7 @@ export default function ImageDownloadButton({
   score: number;
 }) {
   const captureRef = useRef<HTMLDivElement>(null);
+  const explorerRank = getExplorerRank(score);
 
   const handleSave = async () => {
     if (!captureRef.current) return;
@@ -105,7 +107,7 @@ export default function ImageDownloadButton({
                   marginBottom: 4,
                 }}
               >
-                {score}/10
+                {score}/4
               </p>
               <p style={{ marginBottom: 4, color: "#ffffff", fontSize: 12 }}>
                 @{id}
@@ -119,9 +121,9 @@ export default function ImageDownloadButton({
                   textAlign: "center",
                 }}
               >
-                위 사람을 데이티가 빅데이터
+                위 탐험가를 {explorerRank}로
                 <br />
-                박사님으로 인정합니다.
+                임명합니다.
               </p>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import BackgroundCharacter from "@/components/BackgroundCharacter";
 import Box from "@/components/Box";
 import NextButton from "@/components/NextButton";
+import { getExplorerRank } from "@/lib/explorerRank";
 
 const QUESTIONS: {
   question: string;
@@ -117,7 +118,7 @@ const OUTRO_STEPS = (
     role: "both",
   },
   {
-    text: `${id}님을 빅데이터 박사로 인정합니다!`,
+    text: `${id}님을 ${getExplorerRank(n)}로 임명합니다!`,
     response: "고마워!",
     role: "both",
   },
@@ -238,7 +239,7 @@ export default function QuizPage() {
   if (phase === "intro") {
     const step = INTRO_STEPS[introStep];
     const isInputStep = step.type === "input";
-    const introText = introStep === 7 ? `${instagramId}님이시군요!` : step.text;
+    const introText = introStep === 6 ? `${instagramId}님이시군요!` : step.text;
 
     const handleNext = () => {
       if (introStep === INTRO_STEPS.length - 1) {

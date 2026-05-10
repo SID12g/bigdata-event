@@ -2,6 +2,7 @@ import Image from "next/image";
 import BackgroundResultImage from "@/../public/images/background_result.png";
 import Box from "@/components/Box";
 import CharacterImage from "@/../public/images/character.svg";
+import { getExplorerRank } from "@/lib/explorerRank";
 
 export default async function ResultImagePage({
   searchParams,
@@ -10,6 +11,7 @@ export default async function ResultImagePage({
 }) {
   const { id = "", score = "0" } = await searchParams;
   const scoreNum = Math.max(0, Math.min(4, parseInt(score, 10) || 0));
+  const explorerRank = getExplorerRank(scoreNum);
   return (
     <div className="relative inline-block">
       <Image
@@ -30,9 +32,9 @@ export default async function ResultImagePage({
             @{id}
           </p>
           <p className="mb-[20px] text-[var(--color-white)] text-[12px] leading-[180%]">
-            위 사람을 데이티가 빅데이터
+            위 탐험가를 {explorerRank}로
             <br />
-            박사님으로 인정합니다.
+            임명합니다.
           </p>
           <Image
             src={CharacterImage}

@@ -4,6 +4,7 @@ import Logo from "@/components/Logo";
 import CharacterImage from "@/../public/images/character.svg";
 import Image from "next/image";
 import ImageDownloadButton from "@/components/ImageDownloadButton";
+import { getExplorerRank } from "@/lib/explorerRank";
 
 export default async function ResultPage({
   searchParams,
@@ -12,6 +13,7 @@ export default async function ResultPage({
 }) {
   const { id = "", score = "0" } = await searchParams;
   const scoreNum = Math.max(0, Math.min(4, parseInt(score, 10) || 0));
+  const explorerRank = getExplorerRank(scoreNum);
 
   return (
     <>
@@ -29,9 +31,9 @@ export default async function ResultPage({
             @{id}
           </p>
           <p className="mb-[20px] text-[var(--color-white)] text-[12px] leading-[180%]">
-            위 사람을 데이티가 빅데이터
+            위 탐험가를 {explorerRank}로
             <br />
-            박사님으로 인정합니다.
+            임명합니다.
           </p>
           <Image
             src={CharacterImage}
